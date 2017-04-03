@@ -1,5 +1,6 @@
 // Author: itachigorun 
 // Date:   2017-03-17
+// the stackTop is pointer the last element of array
 
 #include<stdio.h>
 #include<stdlib.h>
