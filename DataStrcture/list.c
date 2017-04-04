@@ -91,10 +91,15 @@ int main()
     
     while(select_flag)
     {
-        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit");
+        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit\n");
         scanf("%d", &select_num);
-        if(select_num < 4)
-        scanf("%d", &input_num);
+        if(select_num == 1 || select_num ==2)
+        {
+	    printf("Please input the number: ");
+	    scanf("%d", &input_num);
+	}
+
+	printf("dd");
         switch(select_num)
         {
             case 1:
