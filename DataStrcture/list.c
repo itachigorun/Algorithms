@@ -1,6 +1,7 @@
 // itachigorun 
 // 2017-04-04
 
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
