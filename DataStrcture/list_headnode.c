@@ -100,7 +100,7 @@ int main()
     
     while(select_flag)
     {
-        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit\n");
+        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit ");
         scanf("%d", &select_num);
         if(select_num == 1 || select_num ==2)
         {
@@ -108,7 +108,6 @@ int main()
 	    scanf("%d", &input_num);
 	}
 
-	printf("dd");
         switch(select_num)
         {
             case 1:
