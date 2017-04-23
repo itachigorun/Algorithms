@@ -29,7 +29,7 @@ void InsertHeadList(Node **L, int input_num)
     p->key = input_num;
     p->next = *L;
     if(*L)
-        L->next->prev = p;
+        *L->next->prev = p;
     
     *L = p;
     p->prev = NULL;
@@ -130,7 +130,7 @@ int main()
         {
             case 1:
             InitListHead(&L);
-	        InsertHeadList(L, input_num);
+	        InsertHeadList(&L, input_num);
 	        break;
             case 2:
     	        DeleteList(L, input_num);
