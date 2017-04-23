@@ -29,29 +29,10 @@ void InsertHeadList(Node **L, int input_num)
     p->key = input_num;
     p->next = *L;
     if(*L)
-        *L->next->prev = p;
+        (*L)->prev = p;
     
     *L = p;
     p->prev = NULL;
-}
-
-void InsertTailList(Node *L, int input_num)
-{
-    Node *tail;
-    Node *p = malloc(sizeof(Node));
-    if(!p)
-    {
-        printf("Memory error\n");
-        return ;
-    }
-    p->key = input_num;
-    p->next = NULL;
-    tail = L;
-    while(tail->next != NULL)
-        tail = tail->next;
-    
-    p->prev = tail;
-    tail->next = p;
 }
 
 Node *ListSearch(Node *L, int input_num)
@@ -73,6 +54,11 @@ void DeleteList(Node *L, int input_num)
     }
 
     p = ListSearch(L, input_num);
+    if(!p)
+    {
+        printf("The number is not found\n");
+        return ;
+    }
     if(p->prev!=NULL)
         p->prev->next = p->next;
     else
@@ -85,10 +71,11 @@ void DeleteList(Node *L, int input_num)
 
 void PrintList(Node *L)
 {
-    while(L!=NULL)
+    Node *p = L;
+    while(p!=NULL)
     {
-        printf("%d ", L->key);
-        L = L->next;
+        printf("%d ", p->key);
+        p = p->next;
     }
     printf("\n");
 }
@@ -117,7 +104,7 @@ int main()
     
     while(select_flag)
     {
-        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit\n");
+        printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit: ");
         scanf("%d", &select_num);
         if(select_num == 1 || select_num ==2)
         {
@@ -125,11 +112,10 @@ int main()
 	    scanf("%d", &input_num);
 	}
 
-	printf("dd");
         switch(select_num)
         {
             case 1:
-            InitListHead(&L);
+                InitList(&L);
 	        InsertHeadList(&L, input_num);
 	        break;
             case 2:
