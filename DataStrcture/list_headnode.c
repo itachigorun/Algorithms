@@ -25,7 +25,7 @@ void InitListHead(Node **pnode)
     }
 }
 
-void InsertHeadList(Head *L, int input_num)
+void InsertHeadList(Node *L, int input_num)
 {
     Node *p = malloc(sizeof(Node));
     p->key = input_num;
@@ -80,7 +80,7 @@ void PrintList(Node *L)
     printf("\n");
 }
 
-void ClearList(Head *L)
+void ClearList(Node *L)
 {
   Node *p = NULL;
   if(L->next == NULL)
@@ -97,7 +97,7 @@ void ClearList(Head *L)
 
 int main()
 {
-    Head *L = NULL;
+    Node *L = NULL;
     int select_num;
     int input_num;
     bool select_flag = true;
