@@ -47,7 +47,7 @@ Node *SearchList(Node *L, int input_num)
     return p;
 }
 
-void DeleteList(Node *L, int input_num)
+void DeleteOneList(Node *L, int input_num)
 {
     Node *p = NULL;
     if(L->next == NULL)
@@ -89,6 +89,7 @@ void ClearList(Node *L)
      free(p);
      p = L->next;
   }
+  free(p); /* delete the head node */
 }
 
 int main()
@@ -115,7 +116,7 @@ int main()
 	        InsertHeadList(L, input_num);
 	        break;
             case 2:
-    	        DeleteList(L, input_num);
+    	        DeleteOneList(L, input_num);
     	        break;
     	    case 3:
     	        PrintList(L);
