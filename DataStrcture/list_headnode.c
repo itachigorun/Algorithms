@@ -82,17 +82,13 @@ void PrintList(Node *L)
 
 void ClearList(Node *L)
 {
-  Node *p = NULL;
-  if(L->next == NULL)
-  return ;
-  p = L->next;
-  while(L->next->next!=NULL)
+  Node *p = L->next;
+  while(p)
   {
-     L->next = L->next->next;
+     L->next = p->next;
      free(p);
      p = L->next;
   }
-  free(p);
 }
 
 int main()
