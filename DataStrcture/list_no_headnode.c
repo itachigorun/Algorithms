@@ -82,17 +82,13 @@ void PrintList(Node *L)
 
 void ClearList(Node *L)
 {
-  Node *p = NULL;
-  if(L == NULL)
-  return ;
-  p = L;
-  while(L->next!=NULL)
+  Node *p = L;
+  while(p)
   {
      L = L->next;
      free(p);
-     p = L->next;
+     p = L;
   }
-  free(p);
 }
 
 int main()
@@ -101,34 +97,35 @@ int main()
     int select_num;
     int input_num;
     bool select_flag = true;
-    
+
+    InitList(&L);
     while(select_flag)
     {
         printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit: ");
         scanf("%d", &select_num);
         if(select_num == 1 || select_num ==2)
         {
-	    printf("Please input the number: ");
-	    scanf("%d", &input_num);
-	}
+	        printf("Please input the number: ");
+	        scanf("%d", &input_num);
+    	}
 
         switch(select_num)
         {
             case 1:
-                InitList(&L);
-	        InsertHeadList(&L, input_num);
-	        break;
+	            InsertHeadList(&L, input_num);
+	            break;
             case 2:
     	        DeleteList(L, input_num);
     	        break;
     	    case 3:
     	        PrintList(L);
     	        break;
-	    case 4:
-	        select_flag = false;
-	        ClearList(L);
-	    default:
-	        printf("Please input again\n");
+	        case 4:
+	            select_flag = false;
+	            ClearList(L);
+                break;
+	        default:
+	            printf("Please input again\n");
         }
     }
 
