@@ -99,20 +99,20 @@ int main()
     int input_num;
     bool select_flag = true;
     
+    InitListHead(&L);
     while(select_flag)
     {
         printf("Please input the select 1)insert node  2)delete node 3)show list 4)exit ");
         scanf("%d", &select_num);
         if(select_num == 1 || select_num ==2)
         {
-	    printf("Please input the number: ");
-	    scanf("%d", &input_num);
-	}
+     	    printf("Please input the number: ");
+	        scanf("%d", &input_num);
+	    }
 
         switch(select_num)
         {
             case 1:
-            InitListHead(&L);
 	        InsertHeadList(L, input_num);
 	        break;
             case 2:
