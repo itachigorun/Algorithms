@@ -121,11 +121,12 @@ int main()
     	    case 3:
     	        PrintList(L);
     	        break;
-	    case 4:
-	        select_flag = false;
-	        ClearList(L);
-	    default:
-	        printf("Please input again\n");
+	        case 4:
+	            select_flag = false;
+	            ClearList(L);
+                break;
+	        default:
+	            printf("Please input again\n");
         }
     }
 
