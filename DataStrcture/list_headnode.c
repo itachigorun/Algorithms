@@ -20,8 +20,8 @@ void InitListHead(Node **pnode)
         printf("The head of list init error\n");
     else
     {
-       *pnode->next = NULL;
-       *pnode->prev = NULL;
+       (*pnode)->next = NULL;
+       (*pnode)->prev = NULL;
     }
 }
 
