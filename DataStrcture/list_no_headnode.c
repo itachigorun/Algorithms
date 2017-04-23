@@ -12,80 +12,105 @@ typedef struct node{
     struct node *next;
 }Node;
 
-typedef struct head1{
-    Node *head;
-}Head;
 
-void ListInsert(Head *L, int input_num)
+void InitList(Node **L)
+{
+    *L = NULL;      
+}    
+
+void InsertHeadList(Node **L, int input_num)
 {
     Node *p = malloc(sizeof(Node));
+    if(!p)
+    {
+        printf("Memory error\n");
+        return ;
+    }
     p->key = input_num;
-    p->next = L->head;
-    if(L->head!=NULL)
-        L->head->prev = p;
+    p->next = *L;
+    if(*L)
+        L->next->prev = p;
     
-    L->head = p;
+    *L = p;
     p->prev = NULL;
 }
 
-Node *ListSearch(Head *L, int input_num)
+void InsertTailList(Node *L, int input_num)
 {
-    Node *p = L->head;
+    Node *tail;
+    Node *p = malloc(sizeof(Node));
+    if(!p)
+    {
+        printf("Memory error\n");
+        return ;
+    }
+    p->key = input_num;
+    p->next = NULL;
+    tail = L;
+    while(tail->next != NULL)
+        tail = tail->next;
+    
+    p->prev = tail;
+    tail->next = p;
+}
+
+Node *ListSearch(Node *L, int input_num)
+{
+    Node *p = L;
     while(p!= NULL && p->key!=input_num)
         p = p->next;
     
     return p;
 }
 
-void ListDelete(Head *L, int input_num)
+void DeleteList(Node *L, int input_num)
 {
     Node *p = NULL;
-    if(L->head == NULL)
+    if(L == NULL)
     {
         printf("The list is empty\n");
-	return ;
+	    return ;
     }
 
     p = ListSearch(L, input_num);
     if(p->prev!=NULL)
         p->prev->next = p->next;
     else
-        L->head = p->next;
+        L = p->next;
     if(p->next!=NULL)
         p->next->prev = p->prev;
     
     free(p);
 }
 
-void ListShow(Head *L)
+void PrintList(Node *L)
 {
-    Node *p = L->head;
-    while(p!=NULL)
+    while(L!=NULL)
     {
-        printf("%d ", p->key);
-        p = p->next;
+        printf("%d ", L->key);
+        L = L->next;
     }
     printf("\n");
 }
 
-void ListDestroy(Head *L)
+void ClearList(Node *L)
 {
   Node *p = NULL;
-  if(L->head == NULL)
+  if(L == NULL)
   return ;
-  p = L->head;
-  while(L->head->next!=NULL)
+  p = L;
+  while(L->next!=NULL)
   {
-     L->head = L->head->next;
+     L = L->next;
      free(p);
-     p = L->head->next;
+     p = L->next;
   }
   free(p);
 }
 
 int main()
 {
-    Head *L = NULL;
+    Node *L = NULL;
     int select_num;
     int input_num;
     bool select_flag = true;
@@ -104,17 +129,18 @@ int main()
         switch(select_num)
         {
             case 1:
-	        ListInsert(L, input_num);
+            InitListHead(&L);
+	        InsertHeadList(L, input_num);
 	        break;
             case 2:
-    	        ListDelete(L, input_num);
+    	        DeleteList(L, input_num);
     	        break;
     	    case 3:
-    	        ListShow(L);
+    	        PrintList(L);
     	        break;
 	    case 4:
 	        select_flag = false;
-	        ListDestroy(L);
+	        ClearList(L);
 	    default:
 	        printf("Please input again\n");
         }
