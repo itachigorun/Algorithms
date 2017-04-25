@@ -9,80 +9,109 @@ typedef struct{
     int length;
 }SeqList;
 
-SeqList InitSeqList()
+void InitSeqList(SeqList *L)
 {
-    SeqList L;
-    L.length = 0;
-    return L;
+    (*L).length = 0;
+    printf("Init List success\n");
 }
 
-SeqList CreateSeqList(SeqList L)
+void CreateSeqList(SeqList *L)
 {
     ELEMTYPE x;
     while(scanf("%d", &x) != EOF)
     {
-        L.data[L.length] = x;
-        L.length++;
+        (*L).data[L.length] = x;
+        (*L).length++;
     }
-    return L;
+    printf("Create List success\n")
 }
 
-SeqList InsertSeqList(SeqList L, int i, ELEMTYPE x)
+void InsertSeqList(SeqList *L, int i, ELEMTYPE x)
 {
     if(L.length == MAXSIZE)
         printf("The list is full\n");
     else if(i<1 || i>L.length)
+    {
         printf("The insert position is error\n");
+        return ;
+    }
 
     int j;
-    for(j = L.length-1; j >= i-1; j--)
+    for(j = (L*).length-1; j >= i-1; j--)
     {
-        L.data[j+1] = L.data[j];
+        (*L).data[j+1] = (*L).data[j];
     }
-    L.data[i-1] = x;
-    L.length++;
-    return L;
+    (*L).data[i-1] = x;
+    (*L).length++;
 }
 
-ELEMTYPE GetElemSeqList(SeqList L, int i)
+ELEMTYPE GetElemSeqList(SeqList *L, int i)
 {
-    if(i < 1 || i > L.length)
+    if(i < 1 || i > (*L).length)
     {
         printf("Search position is error\n");
         return 0;
     }
     else
-        return L.data[i-1];
+        return (*L).data[i-1];
 }
 
-int LocateElemSeqList(SeqList L, ELEMTYPE x)
+int LocateElemSeqList(SeqList (*L), ELEMTYPE x)
 {
     int i = 0;
-    while(i <= L.length && L.data[i] != x)
+    while(i <= (*L).length && (*L).data[i] != x)
     {
         i++;
     }
 
-    if(i <= L.length)
+    if(i <= (*L).length)
         return i+1;
     else
         return 0;
 }
 
-SeqList DeleteSeqList(SeqList L, int i)
+void DeleteSeqList(SeqList *L, int i)
 {
-    if(i < 1 || i > L.length)
+    if(i < 1 || i > (*L).length)
         printf("Delete position is error\n");
     int j;
-    if(i == L.length)
+    if(i == (*L).length)
     {
-        L.length--;
+        (*L).length--;
         return L;
     }
-    for(j = i-1; j < L.length-1; j++)
-        L.data[j] = L.data[j+1];
+    for(j = i-1; j < (*L).length-1; j++)
+        (*L).data[j] = (*L).data[j+1];
 
-    L.length--;
-    return L;
+    (*L).length--;
+  
 }
 
+int main()
+{
+    SeqList L;
+    int i;
+    ELEMTYPE x;
+    InitList(&L);
+    CreateSeqList(&L);
+
+    printf("Please input the position you want to insert:");
+    scanf("%d",&i);
+    printf("Please input the number");
+    scanf("%d",&x);
+    InsertSeqList(&L,i,x);
+    
+    printf("Please input the positon you want to search:");
+    scanf("%d", &i);
+    x = GetElemSeqList(&L,i);
+    printf("The number is %d",x);
+
+    printf("Please input the number you want to search:");
+    scanf("%d", &x);
+    i = LocateElemSeqList(&L, x);
+
+    printf("Please input the number you want to delete:");
+    scanf("%d", &i);
+    DeleteSeqList(&L, i);
+    return 0;
+}
