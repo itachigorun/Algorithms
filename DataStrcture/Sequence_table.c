@@ -19,11 +19,12 @@ void CreateSeqList(SeqList *L)
 {
     ELEMTYPE x;
     x = -1;
-    while(x != 0)
+    scanf("%d", &x);
+    while(x != 0&&L->length<=MAXSIZE)
     {
-        scanf("%d", &x);
         L->data[L->length] = x;
         L->length++;
+        scanf("%d", &x);
     }
     printf("Create List success\n");
 }
@@ -32,16 +33,16 @@ void InsertSeqList(SeqList *L, int i, ELEMTYPE x)
 {
     if(L->length == MAXSIZE)
         printf("The list is full\n");
-    else if(i<1 || i>L->length)
+    else if(i<1 || i>L->length+1)
     {
         printf("The insert position is error\n");
         return ;
     }
-
+    
     int j;
-    for(j = L->length-1; j >= i-1; j--)
+    for(j = L->length; j >= i; j--)
     {
-        L->data[j+1] = L->data[j];
+        L->data[j] = L->data[j-1];
     }
     L->data[i-1] = x;
     L->length++;
@@ -80,7 +81,9 @@ void DeleteSeqList(SeqList *L, int i)
     if(i == L->length)
     {
         L->length--;
+	return ;
     }
+
     for(j = i-1; j < L->length-1; j++)
         L->data[j] = L->data[j+1];
 
@@ -108,27 +111,26 @@ int main()
     ELEMTYPE x;
     InitSeqList(&L);
     CreateSeqList(&L);
-
-    printf("Please input the position you want to insert:");
-    scanf("%d",&i);
     PrintSeqList(L);
 
-    printf("Please input the number");
+    printf("Please input the position you want to insert: ");
+    scanf("%d",&i);
+    printf("Please input the number: ");
     scanf("%d",&x);
     InsertSeqList(&L,i,x);
     PrintSeqList(L);
 
-    printf("Please input the positon you want to search:");
+    printf("Please input the positon you want to search: ");
     scanf("%d", &i);
     x = GetElemSeqList(&L,i);
-    printf("The number is %d",x);
+    printf("The number is %d\n",x);
 
-    printf("Please input the number you want to search:");
+    printf("Please input the number you want to search: ");
     scanf("%d", &x);
     i = LocateElemSeqList(&L, x);
-    printf("%d", i);
+    printf("The position is: %d\n", i);
 
-    printf("Please input the number you want to delete:");
+    printf("Please input the position of number you want to delete: ");
     scanf("%d", &i);
     DeleteSeqList(&L, i);
     PrintSeqList(L);
