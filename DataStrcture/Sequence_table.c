@@ -18,31 +18,33 @@ void InitSeqList(SeqList *L)
 void CreateSeqList(SeqList *L)
 {
     ELEMTYPE x;
-    while(scanf("%d", &x) != EOF)
+    x = -1;
+    while(x != 0)
     {
-        (*L).data[L.length] = x;
-        (*L).length++;
+        scanf("%d", &x);
+        (*L).data[L->length] = x;
+        L->length++;
     }
-    printf("Create List success\n")
+    printf("Create List success\n");
 }
 
 void InsertSeqList(SeqList *L, int i, ELEMTYPE x)
 {
-    if(L.length == MAXSIZE)
+    if(L->length == MAXSIZE)
         printf("The list is full\n");
-    else if(i<1 || i>L.length)
+    else if(i<1 || i>L->length)
     {
         printf("The insert position is error\n");
         return ;
     }
 
     int j;
-    for(j = (L*).length-1; j >= i-1; j--)
+    for(j = L->length-1; j >= i-1; j--)
     {
         (*L).data[j+1] = (*L).data[j];
     }
     (*L).data[i-1] = x;
-    (*L).length++;
+    L->length++;
 }
 
 ELEMTYPE GetElemSeqList(SeqList *L, int i)
@@ -77,8 +79,7 @@ void DeleteSeqList(SeqList *L, int i)
     int j;
     if(i == (*L).length)
     {
-        (*L).length--;
-        return L;
+        L->length--;
     }
     for(j = i-1; j < (*L).length-1; j++)
         (*L).data[j] = (*L).data[j+1];
@@ -92,7 +93,7 @@ int main()
     SeqList L;
     int i;
     ELEMTYPE x;
-    InitList(&L);
+    InitSeqList(&L);
     CreateSeqList(&L);
 
     printf("Please input the position you want to insert:");
