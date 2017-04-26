@@ -63,9 +63,7 @@ int LocateElemSeqList(SeqList *L, ELEMTYPE x)
 {
     int i = 0;
     while(i <= L->length && L->data[i] != x)
-    {
         i++;
-    }
 
     if(i <= L->length)
         return i+1;
@@ -81,7 +79,7 @@ void DeleteSeqList(SeqList *L, int i)
     if(i == L->length)
     {
         L->length--;
-	return ;
+	    return ;
     }
 
     for(j = i-1; j < L->length-1; j++)
