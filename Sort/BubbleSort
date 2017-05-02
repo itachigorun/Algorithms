@@ -1,6 +1,24 @@
 # itachigorun   2017-05-02
 
+小数向下冒泡
 for i=1 to A.length-1
     for j=A.length downto i+1
         if A[j]<A[j-1]
+            exchange A[j] with A[j-1]
+大数向下冒泡
+for i=1 to A.length-1
+    for j=A.length downto i+1
+        if A[j]>A[j-1]
+            exchange A[j] with A[j-1]
+
+大数向上冒泡
+for i=1 to A.length-1
+    for j=i+1 to A.length
+        if A[j]<A[j-1]
+            exchange A[j] with A[j-1]
+
+小数向上冒泡
+for i=1 to A.length-1
+    for j=i+1 to A.length
+        if A[j]>A[j-1]
             exchange A[j] with A[j-1]
