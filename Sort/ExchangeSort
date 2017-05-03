@@ -1,0 +1,9 @@
+# itachigorun  2017-05-03
+
+交换排序
+
+for i=1 to A.length-1
+    for j=i+1 to A.length
+        if A[i]>A[j]
+            exchange A[i] with A[j]
+            

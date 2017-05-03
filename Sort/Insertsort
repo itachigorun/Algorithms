@@ -1,7 +1,7 @@
 # itachigorun 2017-02-19
 
 
-1.²åÈëÅÅĞò
+æ’å…¥æ’åº
 for j =2 to A.length
     key = A[j]
     // Insert A[j] into the sorted sequence A[1..j-1]
@@ -11,9 +11,9 @@ for j =2 to A.length
         i = i -1
     A[i + 1] = key
 
-Æ½¾ùÊ±¼ä¸´ÔÓ¶È£ºO(n^2)
-×î²îÊ±¼ä¸´ÔÓ¶È£ºO(n^2)
-¿Õ¼ä¸´ÔÓ¶È    £ºO(1)
+å¹³å‡æ—¶é—´å¤æ‚åº¦ï¼šO(n^2)
+æœ€å·®æ—¶é—´å¤æ‚åº¦ï¼šO(n^2)
+ç©ºé—´å¤æ‚åº¦    ï¼šO(1)
 
 
 #include<stdio.h>
