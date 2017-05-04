@@ -1,0 +1,56 @@
+# itachigorun 2017-05-04
+
+平均时间复杂度：O(nlgn)
+最差时间复杂度：O(nlgn)
+最好时间复杂度: O(nlgn)
+空间复杂度    ：O(n)
+
+
+将两个的有序数列合并成一个有序数列，我们称之为"归并"。
+可以将A，B组各自再分成二组。依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后再合并相邻的二个小组就可以了。
+这样通过先递归的分解数列，再合并数列就完成了归并排序。
+
+
+void mergearray(int a[], int first, int mid, int last, int temp[])  
+{  
+    int i = first, j = mid + 1;  
+    int m = mid,   n = last;  
+    int k = 0;  
+      
+    while (i <= m && j <= n)  
+    {  
+        if (a[i] <= a[j])  
+            temp[k++] = a[i++];  
+        else  
+            temp[k++] = a[j++];  
+    }  
+      
+    while (i <= m)  
+        temp[k++] = a[i++];  
+      
+    while (j <= n)  
+        temp[k++] = a[j++];  
+      
+    for (i = 0; i < k; i++)  
+        a[first + i] = temp[i];  
+}  
+void mergesort(int a[], int first, int last, int temp[])  
+{  
+    if (first < last)  
+    {  
+        int mid = (first + last) / 2;  
+        mergesort(a, first, mid, temp);    //左边有序  
+        mergesort(a, mid + 1, last, temp); //右边有序  
+        mergearray(a, first, mid, last, temp); //再将二个有序数列合并  
+    }  
+}  
+  
+bool MergeSort(int a[], int n)  
+{  
+    int *p = new int[n];  
+    if (p == NULL)  
+        return false;  
+    mergesort(a, 0, n - 1, p);  
+    delete[] p;  
+    return true;  
+}  
