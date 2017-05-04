@@ -1,5 +1,12 @@
 # itachigorun   2017-05-02
 
+
+平均时间复杂度：O(n^2)
+最差时间复杂度：O(n^2)
+最好时间复杂度: O(n)
+空间复杂度    ：O(1)
+
+
 小数向下冒泡
 for i=1 to A.length-1
     for j=A.length downto i+1
