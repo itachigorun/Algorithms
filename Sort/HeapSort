@@ -50,7 +50,10 @@ while i > 1  and  A[PARENT(i)] < A[i]
     exchange A[i] with A[PARENT(i)]
     i = PARENT(i)
 
+
 MAX-HEAP-INSERT(A, key):插入元素
+新增一个节点，插入一个元素
+
 A.heap-size = A.heap-size + 1
 A[A.heap-size] = key
 HEAP-INCREASE-KEY(A, A.heap-size)
