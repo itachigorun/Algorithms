@@ -4,3 +4,34 @@
 
 时间复杂度：O(nlgn)
 空间复杂度：O(1)
+
+A.heap-size是堆的长度，A.length是数组的长度
+
+MAX-HEAPIFY：维护堆的性质
+使根节点的子数重新遵循最大堆的性质
+
+l = LEFT(i)
+r = RIGHT(i)
+if l <= A.heap-size and A[l]>A[i]
+    largest = l
+else largest = i 
+if r <= A.heap-size and A[r]>A[largest]
+    largest = r 
+if largest != i
+    exchange A[i] with A[largest]
+    MAX-HEAPIFY(A,largest)
+
+
+BUILD-MAX-HEAPIFY:建堆
+从无序的输入数据数组中构造一个最大堆
+A.heap-size = A.length 
+for i = A.length/2 downto 1
+    MAX-HEAPIFY(A,i)
+
+
+HEAPSORT:堆排序算法
+对一个数组进行原址排序
+for i = A.length downto 2
+    exchange A[1] with A[i]
+    A.heap-size = A.heap-size - 1
+    MAX-HEAPIFY(A,1)
