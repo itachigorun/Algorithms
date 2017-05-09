@@ -2,7 +2,9 @@
 
 堆排序
 
-时间复杂度：O(nlgn)
+平均时间复杂度：O(nlgn)
+最差时间复杂度：O(nlgn)
+最好时间复杂度：O(nlgn)
 空间复杂度：O(1)
 
 A.heap-size是堆的长度，A.length是数组的长度
