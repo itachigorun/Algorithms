@@ -19,3 +19,28 @@ for i = 1 to k
 for j = A.length downto 1
     B[C[A[j]]] = A[j]
     C[A[j]] = C[A[j]] -1
+
+
+计数排序第二种实现方式
+void BucketSort(int* arr , int len)  
+{  
+    int tmpArrLen = GetMaxVal(arr , len) + 1;  
+    int tmpArr[tmpArrLen];  
+    int i, j;  
+      
+    for( i = 0; i < tmpArrLen; i++)  
+        tmpArr[i] = 0;  
+      
+    for(i = 0; i < len; i++)   
+        tmpArr[ arr[i] ]++;  
+      
+    for(i = 0, j = 0; i < tmpArrLen; i ++)  
+    {  
+        while( tmpArr[ i ] != 0) 
+        {  
+            arr[j ] = i;  
+            j++;  
+            tmpArr[i]--;  
+        }  
+    }  
+}  
