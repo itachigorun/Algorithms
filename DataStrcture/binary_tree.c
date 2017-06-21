@@ -62,6 +62,31 @@ void postOrderTree(node *tree)
     }
 }
 
+int is_equal(node tree1, node tree2){  
+    if(!tree1 && !tree2){      //都为空就相等  
+        return 1;  
+    }  
+    if(tree1 && tree2 && tree1->data == tree2->data){      //有一个为空或数据不同就不判断了  
+        if(is_equal(tree1->lchild,tree2->lchild))  
+            if(is_equal(tree1->rchild,tree2->rchild)){  
+                return 1;  
+            }  
+    }  
+    return 0;  
+} 
+
+int get_height_tree(node tree)
+{
+    int height, left, right;
+    if(!tree){
+        return 0;
+    }
+    left = get_height_tree(tree->left);
+    right = get_height_tree(tree->right);
+    height = (left->right? left : right) + 1;
+    return height;
+}
+
 int main()
 {
     node * root = NULL;
