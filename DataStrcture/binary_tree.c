@@ -9,7 +9,36 @@ struct binary_tree{
 
 typedef struct binary_tree node;
 
-void insert(node ** tree, int val)
+int create_tree(node **tree)
+{
+    int number;
+    scanf("%d", %number);
+    if(ch == -1)
+    {
+        *tree = NULL;
+        return 0;
+    }
+    else
+    {
+        *tree = (node *)malloc(sizeof(node));
+        if(tree = NULL)
+        {
+            printf("malloc failed\n");
+            return 0;
+        }
+        else
+        {
+            (*tree)->data = number;
+            printf("输入%d的左子节点："，number);
+            create_tree(&((*tree)->left));
+            printf("输入%d的右子节点:", number);
+            create_tree(&((*tree)->right));
+        }
+    }
+    return 1;
+}
+
+void insert_tree(node ** tree, int val)
 {
     node * temp = NULL;
     if(!(*tree)){
@@ -20,45 +49,45 @@ void insert(node ** tree, int val)
     }
 
     if(val <= (*tree)->data){
-        insert(&(*tree)->left, val);
+        insert_tree(&(*tree)->left, val);
     }else if(val > (*tree)->data){
-        insert(&(*tree)->right,val);
+        insert_tree(&(*tree)->right,val);
     }
 }
 
-void deltree(node *tree)
+void delete_tree(node *tree)
 {
     if(tree){
-        deltree(tree->left);
-        deltree(tree->right);
+        delete_tree(tree->left);
+        delete_tree(tree->right);
         free(tree);
     }    
 }
 
-void preOrderTree(node *tree)
+void pre_order_tree(node *tree)
 {
     if(tree){
         printf("%d\n", tree->data);
-        preOrderTree(tree->left);
-        preOrderTree(tree->right);
+        pre_order_tree(tree->left);
+        pre_order_tree(tree->right);
     }
 }
 
-void midOrderTree(node *tree)
+void mid_order_tree(node *tree)
 {
     if(tree){
-        midOrderTree(tree->left);
+        mid_order_tree(tree->left);
         printf("%d\n", tree->data);
-        midOrderTree(tree->right);
+        mid_order_tree(tree->right);
     }
 }
 
-void postOrderTree(node *tree)
+void post_order_tree(node *tree)
 {
     if(tree){
-        postOrderTree(tree->left);
+        post_order_tree(tree->left);
         printf("%d\n", tree->data);
-        postOrderTree(tree->right);
+        post_order_tree(tree->right);
     }
 }
 
@@ -87,18 +116,25 @@ int get_height_tree(node tree)
     return height;
 }
 
+int get_leaf_count(node *tree)
+{
+    static int count;
+    if(node == NULL)
+    {
+        if(node->left == NULL && node->right == NULL)
+            count++;
+        get_leaf_count(node->left);
+        get_leaf_count(node->right);
+    }
+    return count;
+}
+
 int main()
 {
     node * root = NULL;
     node * tmp = NULL;
     
     insert(&root,9);
-    insert(&root,4);
-    insert(&root,15);
-    insert(&root,6);
-    insert(&root,12);
-    insert(&root,17);
-    insert(&root,2);
 
     printf("Pre Order Display:\n");
     preOrderTree(root);
