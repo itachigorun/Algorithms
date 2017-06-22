@@ -54,6 +54,7 @@ void CreateTree(node **tree)
     return ;
 }
 
+//有问题待修改
 void InsertTree(node ** tree, int value)
 {
     node * temp = NULL;
