@@ -31,8 +31,7 @@ void CreateTree(node **tree)
     if(number == -1)
     {
         *tree = NULL;
-        printf("程序退出！");
-        exit(0);
+        return ;
     }
     else
     {
