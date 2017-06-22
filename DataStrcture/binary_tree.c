@@ -162,29 +162,32 @@ int main()
     int input_number;
 
     printf("输入整数，构造二叉树，输入-1退出\n");
-    create_tree(&root);
+    CreateTree(&root);
 
+    while(1){
     printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)退出: ");
     scanf("%d", &select_number);
+
     switch(select_number){
         case 1: 
             scanf("%d", &input_number);
-            insert_tree(&root,input_number);
+            InsertTree(&root,input_number);
             break;
         case 2:
-            pre_order_tree(root);
+            PreOrderTree(root);
             break;
         case 3:
-            mid_order_tree(root);
+            MidOrderTree(root);
             break;
         case 4:
-            post_order_tree(root);
+            PostOrderTree(root);
             break;
         case 5:
-            delete_tree(root);
-            return 0;
+            DeleteTree(root);
+            break;
         default:
             printf("请选择正确选项！\n");
+    }
     }
 
     return 0;
