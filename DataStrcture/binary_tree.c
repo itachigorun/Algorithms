@@ -24,7 +24,7 @@ struct binary_tree{
 
 typedef struct binary_tree node;
 
-void create_tree(node **tree)
+void CreateTree(node **tree)
 {
     int number;
     scanf("%d", &number);
@@ -46,89 +46,113 @@ void create_tree(node **tree)
         {
             (*tree)->data = number;
             printf("输入%d的左子节点："，number);
-            create_tree(&((*tree)->left));
+            CreateTree(&((*tree)->left));
             printf("输入%d的右子节点:", number);
-            create_tree(&((*tree)->right));
+            CreateTree(&((*tree)->right));
         }
     }
+
+    printf("二叉树创建成功\n");
+    return ;
 }
 
-void insert_tree(node ** tree, int val)
+void InsertTree(node ** tree, int val)
 {
     node * temp = NULL;
-    if(!(*tree)){
+    if((*tree) == NULL){
         temp = (node *)malloc(sizeof(node));
         temp->left = NULL;
         temp->right = NULL;
         *tree = temp;
     }
 
-    if(val <= (*tree)->data){
-        insert_tree(&(*tree)->left, val);
-    }else if(val > (*tree)->data){
-        insert_tree(&(*tree)->right,val);
-    }
+    if(val <= (*tree)->data)
+        InsertTree(&(*tree)->left, val);
+    else 
+        InsertTree(&(*tree)->right, val);
+    
 }
 
-void delete_tree(node *tree)
+void DeleteTree(node *tree)
 {
     if(tree){
-        delete_tree(tree->left);
-        delete_tree(tree->right);
+        DeleteTree(tree->left);
+        DeleteTree(tree->right);
         free(tree);
     }    
 }
 
-void pre_order_tree(node *tree)
+void PreOrderTree(node *tree)
 {
     if(tree){
         printf("%d\n", tree->data);
-        pre_order_tree(tree->left);
-        pre_order_tree(tree->right);
+        PreOrderTree(tree->left);
+        PreOrderTree(tree->right);
     }
 }
 
-void mid_order_tree(node *tree)
+void MidOrderTree(node *tree)
 {
     if(tree){
-        mid_order_tree(tree->left);
+        MidOrderTree(tree->left);
         printf("%d\n", tree->data);
-        mid_order_tree(tree->right);
+        MidOrderTree(tree->right);
     }
 }
 
-void post_order_tree(node *tree)
+void PostOrderTree(node *tree)
 {
     if(tree){
-        post_order_tree(tree->left);
-        printf("%d\n", tree->data);
-        post_order_tree(tree->right);
+        PostOrderTree(tree->left);
+        Printf("%d\n", tree->data);
+        PostOrderTree(tree->right);
     }
 }
 
-int get_height_tree(node *tree)
+void SearchValue(node *tree, int number)
+{
+    if(tree == NULL)
+    {
+        printf("该树为空\n");
+        return ;
+    }
+    else
+    {
+        if(number < tree->data)
+            SearchValue(tree->left, number);
+        else if(number > tree->data)
+            SearchValue(tree->right, number);
+        else
+        {
+            printf("找到该值!\n");
+            return ;
+        }
+    }
+}
+
+int GetHeightTree(node *tree)
 {
     int height, left, right;
     if(tree == NULL){
         return 0;
     }
-    left = get_height_tree(tree->left);
-    right = get_height_tree(tree->right);
+    left = GetHeightTree(tree->left);
+    right = GetHeightTree(tree->right);
     height = (left > right? left: right) + 1;
     return height;
 }
 
-int get_leaf_count(node *tree)
+int GetLeafCount(node *tree)
 {
     static int count;
     if(tree != NULL)
     {
         if(tree->left == NULL && treee->right == NULL)
             count++;
-        get_leaf_count(tree->left);
-        get_leaf_count(tree->right);
+        GetLeafCount(tree->left);
+        GetLeafCount(tree->right);
     }
-    return 1;
+    return count;
 }
 
 int main()
