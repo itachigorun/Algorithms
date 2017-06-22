@@ -181,7 +181,7 @@ int GetFullNodeCount1(node *tree)
 //故可以这样：
 int GetFullNodeCount2(node *tree)
 {
-    return GetLeafCount(tree) > 0 ? GetLeafCount(tree) - 1; 
+    return GetLeafCount(tree) > 0 ? GetLeafCount(tree) - 1 : 0; 
 }
 
 int main()
