@@ -227,7 +227,7 @@ int main()
             break;
         case 9:
             DeleteTree(root);
-            break;
+            exit;
         default:
             printf("请选择正确选项！\n");
     }
