@@ -54,17 +54,18 @@ void CreateTree(node **tree)
     return ;
 }
 
-void InsertTree(node ** tree, int val)
+void InsertTree(node ** tree, int value)
 {
     node * temp = NULL;
-    if((*tree) == NULL){
+    if(*tree == NULL){
         temp = (node *)malloc(sizeof(node));
         temp->left = NULL;
         temp->right = NULL;
+        temp->data = value;
         *tree = temp;
     }
 
-    if(val <= (*tree)->data)
+    if(value <= (*tree)->data)
         InsertTree(&(*tree)->left, val);
     else 
         InsertTree(&(*tree)->right, val);
@@ -200,6 +201,7 @@ int main()
 
     switch(select_number){
         case 1: 
+            printf("请输入一个整数：");
             scanf("%d", &input_number);
             InsertTree(&root,input_number);
             break;
@@ -228,7 +230,7 @@ int main()
             break;
         case 9:
             DeleteTree(root);
-            exit;
+            exit(0);
         default:
             printf("请选择正确选项！\n");
     }
