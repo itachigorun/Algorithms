@@ -104,29 +104,8 @@ void PostOrderTree(node *tree)
 {
     if(tree){
         PostOrderTree(tree->left);
-        Printf("%d\n", tree->data);
+        printf("%d\n", tree->data);
         PostOrderTree(tree->right);
-    }
-}
-
-void SearchValue(node *tree, int number)
-{
-    if(tree == NULL)
-    {
-        printf("该树为空\n");
-        return ;
-    }
-    else
-    {
-        if(number < tree->data)
-            SearchValue(tree->left, number);
-        else if(number > tree->data)
-            SearchValue(tree->right, number);
-        else
-        {
-            printf("找到该值!\n");
-            return ;
-        }
     }
 }
 
@@ -165,7 +144,7 @@ int main()
     CreateTree(&root);
 
     while(1){
-    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)退出: ");
+    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)得到树的高度 6)得到树的节点数 7)退出: ");
     scanf("%d", &select_number);
 
     switch(select_number){
@@ -183,6 +162,12 @@ int main()
             PostOrderTree(root);
             break;
         case 5:
+            printf("二叉树的高度是:%d", GetHeightTree(root));
+            break;
+        case 6:
+            printf("二叉树的节点数是：%d", GetLeafCount(root));
+            break;
+        case 7:
             DeleteTree(root);
             break;
         default:
