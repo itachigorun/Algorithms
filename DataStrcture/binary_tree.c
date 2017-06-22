@@ -66,9 +66,9 @@ void InsertTree(node ** tree, int value)
     }
 
     if(value <= (*tree)->data)
-        InsertTree(&(*tree)->left, val);
+        InsertTree(&(*tree)->left, value);
     else 
-        InsertTree(&(*tree)->right, val);
+        InsertTree(&(*tree)->right, value);
     
 }
 
