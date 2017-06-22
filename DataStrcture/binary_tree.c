@@ -57,7 +57,26 @@ void CreateTree(node **tree)
 void InsertTree(node ** tree, int value)
 {
     node * temp = NULL;
-    if(*tree == NULL){
+    if(*tree == NULL)
+    {
+        temp = (node *)malloc(sizeof(node));
+        temp->left = NULL;
+        temp->right = NULL;
+        temp->data = value;
+        *tree = temp;
+    }
+    
+    if((*tree)->left == NULL && value <= (*tree)->data)
+    {
+        temp = (node *)malloc(sizeof(node));
+        temp->left = NULL;
+        temp->right = NULL;
+        temp->data = value;
+        *tree = temp;
+    }
+        
+    if((*tree)->right == NULL && value > (*tree)->data)
+    {
         temp = (node *)malloc(sizeof(node));
         temp->left = NULL;
         temp->right = NULL;
@@ -194,6 +213,7 @@ int main()
 
     printf("输入整数，构造二叉树，输入-1退出\n");
     CreateTree(&root);
+    printf("二叉树创建成功\n");
 
     while(1){
     printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)得到树的高度 6)叶子节点数 7)节点数 8)满节点数 9)退出: ");
