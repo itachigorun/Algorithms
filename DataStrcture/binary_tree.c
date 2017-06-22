@@ -174,7 +174,8 @@ int GetFullNodeCount1(node *tree)
         count = GetFullNodeCount1(tree->right);
     else if(tree->left != NULL && tree->right == NULL)
         count = GetFullNodeCount1(tree->left);
-    
+    else 
+        count = 1 + GetFullNodeCount1(tree->left) + GetFullNodeCount1(tree->right);
     return count;
 }
 //对于二叉树而言，有一个公式：度为2的结点个数等于度为0的结点个数减去1。 即：n(2)=n(0)-1
