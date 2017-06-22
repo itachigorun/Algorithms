@@ -144,7 +144,7 @@ int GetLeafCount1(node *tree)
     else if(tree->left == NULL && tree->right == NULL)
         return 1;
     else
-        count = GetLeafCount(tree->left) + GetLeafCount(tree->right);
+        count = GetLeafCount1(tree->left) + GetLeafCount1(tree->right);
 
     return count;
 }
@@ -156,8 +156,8 @@ int GetLeafCount2(node *tree)
     {
         if(tree->left == NULL && tree->right == NULL)
             count++;
-        GetLeafCount(tree->left);
-        GetLeafCount(tree->right);
+        GetLeafCount2(tree->left);
+        GetLeafCount2(tree->right);
     }
     return count;
 }
@@ -171,9 +171,9 @@ int GetFullNodeCount1(node *tree)
     else if(tree->left == NULL && tree->right == NULL)
         return 0;
     else if(tree->left == NULL && tree->right != NULL)
-        count = GetFullNodeCount(tree->right);
+        count = GetFullNodeCount1(tree->right);
     else if(tree->left != NULL && tree->right == NULL)
-        count = GetFullNodeCount(tree->left);
+        count = GetFullNodeCount1(tree->left);
     
     return count;
 }
@@ -181,7 +181,7 @@ int GetFullNodeCount1(node *tree)
 //故可以这样：
 int GetFullNodeCount2(node *tree)
 {
-    return GetLeafCount(tree) > 0 ? GetLeafCount(tree) - 1 : 0; 
+    return GetLeafCount1(tree) > 0 ? GetLeafCount1(tree) - 1 : 0; 
 }
 
 int main()
