@@ -31,7 +31,7 @@ void CreateTree(node **tree)
     if(number == -1)
     {
         *tree = NULL;
-        printf("程序退出！")
+        printf("程序退出！");
         exit(0);
     }
     else
@@ -40,12 +40,12 @@ void CreateTree(node **tree)
         if(tree == NULL)
         {
             printf("malloc failed\n");
-            return 0;
+            return ;
         }
         else
         {
             (*tree)->data = number;
-            printf("输入%d的左子节点："，number);
+            printf("输入%d的左子节点：", number);
             CreateTree(&((*tree)->left));
             printf("输入%d的右子节点:", number);
             CreateTree(&((*tree)->right));
@@ -147,7 +147,7 @@ int GetLeafCount(node *tree)
     static int count;
     if(tree != NULL)
     {
-        if(tree->left == NULL && treee->right == NULL)
+        if(tree->left == NULL && tree->right == NULL)
             count++;
         GetLeafCount(tree->left);
         GetLeafCount(tree->right);
