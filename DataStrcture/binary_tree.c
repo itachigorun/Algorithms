@@ -14,6 +14,7 @@
 */
 #include<stdio.h>
 #include<malloc.h>
+#include<stdlib.h>
 
 struct binary_tree{
     int data;
@@ -26,8 +27,8 @@ typedef struct binary_tree node;
 void create_tree(node **tree)
 {
     int number;
-    scanf("%d", %number);
-    if(ch == -1)
+    scanf("%d", &number);
+    if(number == -1)
     {
         *tree = NULL;
         printf("程序退出！")
@@ -105,42 +106,29 @@ void post_order_tree(node *tree)
     }
 }
 
-int is_equal(node tree1, node tree2){  
-    if(!tree1 && !tree2){      //都为空就相等  
-        return 1;  
-    }  
-    if(tree1 && tree2 && tree1->data == tree2->data){      //有一个为空或数据不同就不判断了  
-        if(is_equal(tree1->lchild,tree2->lchild))  
-            if(is_equal(tree1->rchild,tree2->rchild)){  
-                return 1;  
-            }  
-    }  
-    return 0;  
-} 
-
-int get_height_tree(node tree)
+int get_height_tree(node *tree)
 {
     int height, left, right;
-    if(!tree){
+    if(tree == NULL){
         return 0;
     }
     left = get_height_tree(tree->left);
     right = get_height_tree(tree->right);
-    height = (left->right? left : right) + 1;
+    height = (left > right? left: right) + 1;
     return height;
 }
 
 int get_leaf_count(node *tree)
 {
     static int count;
-    if(node == NULL)
+    if(tree != NULL)
     {
-        if(node->left == NULL && node->right == NULL)
+        if(tree->left == NULL && treee->right == NULL)
             count++;
-        get_leaf_count(node->left);
-        get_leaf_count(node->right);
+        get_leaf_count(tree->left);
+        get_leaf_count(tree->right);
     }
-    return count;
+    return 1;
 }
 
 int main()
