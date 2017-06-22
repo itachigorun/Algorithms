@@ -51,7 +51,6 @@ void CreateTree(node **tree)
         }
     }
 
-    printf("二叉树创建成功\n");
     return ;
 }
 
@@ -81,6 +80,7 @@ void DeleteTree(node *tree)
     }    
 }
 
+//前序遍历二叉树
 void PreOrderTree(node *tree)
 {
     if(tree){
@@ -90,6 +90,7 @@ void PreOrderTree(node *tree)
     }
 }
 
+//中序遍历二叉树
 void MidOrderTree(node *tree)
 {
     if(tree){
@@ -99,15 +100,17 @@ void MidOrderTree(node *tree)
     }
 }
 
+//后续遍历二叉树
 void PostOrderTree(node *tree)
 {
     if(tree){
         PostOrderTree(tree->left);
-        printf("%d\n", tree->data);
         PostOrderTree(tree->right);
+        printf("%d\n", tree->data);
     }
 }
 
+//计算二叉树的高度
 int GetHeightTree(node *tree)
 {
     int height, left, right;
@@ -120,7 +123,33 @@ int GetHeightTree(node *tree)
     return height;
 }
 
-int GetLeafCount(node *tree)
+//计算节点数
+int GetNodeCount(node *tree)
+{
+    int count = 0;
+    if(tree == NULL)
+        return 0;
+    else
+        count = 1 + GetNodeCount(tree->left) + GetNodeCount(tree->right);
+    
+    return count;
+}
+
+//计算叶子节点数
+int GetLeafCount1(node *tree)
+{
+    int count = 0;
+    if(tree == NULL)
+        return 0;
+    else if(tree->left == NULL && tree->right == NULL)
+        return 1;
+    else
+        count = GetLeafCount(tree->left) + GetLeafCount(tree->right);
+
+    return count;
+}
+
+int GetLeafCount2(node *tree)
 {
     static int count;
     if(tree != NULL)
@@ -133,6 +162,28 @@ int GetLeafCount(node *tree)
     return count;
 }
 
+//计算满节点数--度为2的节点
+int GetFullNodeCount1(node *tree)
+{
+    int count = 0;
+    if(tree == NULL)
+        return 0;
+    else if(tree->left == NULL && tree->right == NULL)
+        return 0;
+    else if(tree->left == NULL && tree->right != NULL)
+        count = GetFullNodeCount(tree->right);
+    else if(tree->left != NULL && tree->right == NULL)
+        count = GetFullNodeCount(tree->left);
+    
+    return count;
+}
+//对于二叉树而言，有一个公式：度为2的结点个数等于度为0的结点个数减去1。 即：n(2)=n(0)-1
+//故可以这样：
+int GetFullNodeCount2(node *tree)
+{
+    return GetLeafCount(tree) > 0 ? GetLeafCount(tree) - 1; 
+}
+
 int main()
 {
     node * root = NULL;
@@ -143,7 +194,7 @@ int main()
     CreateTree(&root);
 
     while(1){
-    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)得到树的高度 6)得到树的节点数 7)退出: ");
+    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)得到树的高度 6)叶子节点数 7)节点数 8)满节点数 9)退出: ");
     scanf("%d", &select_number);
 
     switch(select_number){
@@ -161,12 +212,20 @@ int main()
             PostOrderTree(root);
             break;
         case 5:
-            printf("二叉树的高度是:%d", GetHeightTree(root));
+            printf("二叉树的高度是:%d\n", GetHeightTree(root));
             break;
         case 6:
-            printf("二叉树的节点数是：%d", GetLeafCount(root));
+            printf("二叉树的叶子节点数是：%d\n", GetLeafCount1(root));
+            printf("二叉树的叶子节点数是：%d\n", GetLeafCount2(root));
             break;
         case 7:
+            printf("二叉树的节点数是：%d\n", GetNodeCount(root));
+            break;
+        case 8:
+            printf("二叉树的满节点数是:%d\n", GetFullNodeCount1(root));
+            printf("二叉树的满节点数是:%d\n", GetFullNodeCount2(root));
+            break;
+        case 9:
             DeleteTree(root);
             break;
         default:
