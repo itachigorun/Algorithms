@@ -171,7 +171,7 @@ void MidOrderTree2(node *tree)
     while(tree || stack.top!=-1){
         while(tree){
             NodePush(&stack, tree);
-            tree = tree->right;
+            tree = tree->left;
         }
         tree = NodePop(&stack);
         printf("%d ", tree->data);
@@ -344,14 +344,17 @@ int main()
             break;
         case 2:
             PreOrderTree(root);
+            printf("\n");
             PreOrderTree2(root);
             break;
         case 3:
             MidOrderTree(root);
+            printf("\n");
             MidOrderTree2(root);
             break;
         case 4:
             PostOrderTree(root);
+            printf("\n");
             PostOrderTree2(root);
             break;
         case 5:
