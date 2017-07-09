@@ -30,6 +30,12 @@ typedef struct seqstack{
     int top;           //top为数组的下标
 }seqstack;
 
+typedef struct seqqueue{
+    node *data[MAXSIZE];
+    int front;
+    int rear;
+}seqqueue;
+
 void CreateTree(node **tree)
 {
     int number;
@@ -146,9 +152,10 @@ void PreOrderTree2(node *tree)
 {
     seqstack stack;
     stack.top = -1;    //表示栈为空
-    if(tree == NULL)
+    if(tree == NULL){
         printf(" The tree is empty!\n");
-    
+        return ;
+    }
     while(tree || stack.top!=-1){
         while(tree){                  //只要节点不为空就入栈，与左右节点无关
             printf("%d ", tree->data);
@@ -165,9 +172,10 @@ void MidOrderTree2(node *tree)
 {
     seqstack stack;
     stack.top = -1;
-    if(tree == NULL)
+    if(tree == NULL){
         printf("The tree is empty!\n");
-    
+        return ;
+    }
     while(tree || stack.top!=-1){
         while(tree){
             NodePush(&stack, tree);
@@ -184,9 +192,10 @@ void PostOrderTree2(node *tree)
 {
     seqstack stack;
     stack.top = -1;
-    if(tree == NULL)
+    if(tree == NULL){
         printf("The tree is empty!\n");
-    
+        return ;
+    }
     while(tree || stack.top!=-1){
         while(tree){
             NodePush(&stack, tree);
@@ -205,6 +214,48 @@ void PostOrderTree2(node *tree)
             }
             tree = NULL;  //必须将tree置为空，跳过走左，直接向右走
         }
+    }
+}
+
+void EnterQueue(seqqueue *queue, node *tree)
+{
+    if(queue->rear == MAXSIZE)
+        printf("The queue is full\n");
+    else{
+        queue->data[q-rear] = tree;
+        queue->rear++;
+    }
+}
+
+node * DeleteQueue(seqqueue *queue)
+{
+    if(queue->front == queue->rear)
+        return NULL;
+    else{
+        queue->front++;
+        return q->data[q->front-1];
+    }
+}
+
+//层次遍历：每一层从左向右输出
+void PrintLevelTree(node *tree)
+{
+    sequeue queue;
+    node *temp;
+    queue.front = 0;
+    queue.rear = 0;
+    if(tree == NULL){
+        printf("The tree is empty\n");
+        return ;
+    }
+    EnterQueue(&queue, tree);
+    while(queue.front != queue.rear){
+        tree = DeleteQueue(&queue);
+        printf("%d ", tree->data);
+        if(tree->left)
+            EnterQueue(&queue, tree->left);
+        if(tree->right)
+            EnterQueue(&queue, tree->right);
     }
 }
 
