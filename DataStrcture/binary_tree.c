@@ -25,7 +25,7 @@ typedef struct binary_tree{
 }node;
 
 typedef struct seqstack{
-    node data[MAXSIZE];
+    node *data[MAXSIZE];
     int tag[MAXSIZE];  //为后续遍历准备的
     int top;           //top为数组的下标
 }seqstack;
@@ -127,7 +127,7 @@ void NodePush(seqstack *stack, node *tree)
         printf("The stack is full\n");
     else{
         stack->top++;
-        stack->data[s->top] = tree;
+        stack->data[stack->top] = tree;
     }
 }
 
@@ -194,7 +194,7 @@ void PostOrderTree2(node *tree)
             tree = tree->left;
         }
         if(stack.tag[stack.top] == 0){  //第一次访问根节点时，专向同层右节点
-            tree = stack.data[s.top];  //左走到底时tree为空
+            tree = stack.data[stack.top];  //左走到底时tree为空
             stack.tag[stack.top] = 1;
             tree = tree->right;
         }
@@ -203,7 +203,7 @@ void PostOrderTree2(node *tree)
                 tree = NodePop(&stack);
                 printf("%c ", tree->data);
             }
-            tree = NUll;  //必须将tree置为空，跳过走左，直接向右走
+            tree = NULL;  //必须将tree置为空，跳过走左，直接向右走
         }
     }
 }
