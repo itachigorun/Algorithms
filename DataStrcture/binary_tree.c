@@ -386,10 +386,10 @@ int GetKLevel(node *tree, int k)
 //求二叉树镜像，即交换左右子树
 void GetMirrorTree(node *tree)
 {
-    if(node == NULL)
+    if(tree == NULL)
         return ;
     node *temp = tree->left;
-    tree->left = node->right;
+    tree->left = tree->right;
     tree->right = temp;
     GetMirrorTree(tree->left);
     GetMirrorTree(tree->right);
