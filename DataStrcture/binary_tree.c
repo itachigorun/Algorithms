@@ -58,7 +58,7 @@ void CreateTree(node **tree)
             (*tree)->data = number;
             printf("输入%d的左子节点：", number);
             CreateTree(&((*tree)->left));
-            printf("输入%d的右子节点:", number);
+            printf("输入%d的右子节点: ", number);
             CreateTree(&((*tree)->right));
         }
     }
