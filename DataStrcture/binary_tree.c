@@ -453,7 +453,7 @@ int main()
             printf("二叉树的满节点数是:%d\n", GetFullNodeCount2(root));
             break;
         case 10:
-            printf("输入：")；
+            printf("输入：");
             scanf("%d", &input_number);
             printf("第%d层的节点数位：%d", input_number, GetKLevel(root, input_number));
             break;
