@@ -413,6 +413,7 @@ int main()
             break;
         case 5:
             PrintLevelTree(root);
+            printf("\n");
             break;
         case 6:
             printf("二叉树的高度是:%d\n", GetHeightTree(root));
