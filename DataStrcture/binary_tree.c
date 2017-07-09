@@ -233,14 +233,14 @@ node * DeleteQueue(seqqueue *queue)
         return NULL;
     else{
         queue->front++;
-        return q->data[q->front-1];
+        return queue->data[queue->front-1];
     }
 }
 
 //层次遍历：每一层从左向右输出
 void PrintLevelTree(node *tree)
 {
-    sequeue queue;
+    seqqueue queue;
     node *temp;
     queue.front = 0;
     queue.rear = 0;
