@@ -455,7 +455,7 @@ int main()
         case 10:
             printf("输入：");
             scanf("%d", &input_number);
-            printf("第%d层的节点数位：%d", input_number, GetKLevel(root, input_number));
+            printf("第%d层的节点数位：%d\n", input_number, GetKLevel(root, input_number));
             break;
         case 11:
             GetMirrorTree(root);
