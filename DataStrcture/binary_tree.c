@@ -384,7 +384,7 @@ int main()
     printf("二叉树创建成功\n");
 
     while(1){
-    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)得到树的高度 6)叶子节点数 7)节点数 8)满节点数 9)退出: ");
+    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)层次遍历 6)得到树的高度 7)叶子节点数 8)节点数 9)满节点数 10)退出: ");
     scanf("%d", &select_number);
 
     switch(select_number){
@@ -412,20 +412,23 @@ int main()
             printf("\n");
             break;
         case 5:
-            printf("二叉树的高度是:%d\n", GetHeightTree(root));
+            PrintLevelTree(root);
             break;
         case 6:
+            printf("二叉树的高度是:%d\n", GetHeightTree(root));
+            break;
+        case 7:
             printf("二叉树的叶子节点数是：%d\n", GetLeafCount1(root));
             printf("二叉树的叶子节点数是：%d\n", GetLeafCount2(root));
             break;
-        case 7:
+        case 8:
             printf("二叉树的节点数是：%d\n", GetNodeCount(root));
             break;
-        case 8:
+        case 9:
             printf("二叉树的满节点数是:%d\n", GetFullNodeCount1(root));
             printf("二叉树的满节点数是:%d\n", GetFullNodeCount2(root));
             break;
-        case 9:
+        case 10:
             DeleteTree(root);
             exit(0);
         default:
