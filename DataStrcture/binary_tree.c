@@ -193,7 +193,7 @@ void PostOrderTree2(node *tree)
             stack.tag[stack.top] = 0;    //设置访问根节点标记，0为第一次，1为第二次访问
             tree = tree->left;
         }
-        if(stack.tag[stack.top] == 0){  //第一次访问根节点时，专向同层右节点
+        if(stack.tag[stack.top] == 0){  //第一次访问根节点时，转向同层右节点
             tree = stack.data[stack.top];  //左走到底时tree为空
             stack.tag[stack.top] = 1;
             tree = tree->right;
@@ -201,7 +201,7 @@ void PostOrderTree2(node *tree)
         else{
             while(stack.tag[stack.top] == 1){   //找到栈中下一个第一次访问的节点，退出循环时并没有pop，所有为其左子节点
                 tree = NodePop(&stack);
-                printf("%c ", tree->data);
+                printf("%d ", tree->data);
             }
             tree = NULL;  //必须将tree置为空，跳过走左，直接向右走
         }
@@ -346,16 +346,19 @@ int main()
             PreOrderTree(root);
             printf("\n");
             PreOrderTree2(root);
+            printf("\n");
             break;
         case 3:
             MidOrderTree(root);
             printf("\n");
             MidOrderTree2(root);
+            printf("\n");
             break;
         case 4:
             PostOrderTree(root);
             printf("\n");
             PostOrderTree2(root);
+            printf("\n");
             break;
         case 5:
             printf("二叉树的高度是:%d\n", GetHeightTree(root));
