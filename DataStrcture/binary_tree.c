@@ -376,11 +376,11 @@ int GetFullNodeCount2(node *tree)
 //计算二叉树第K层的节点个数
 int GetKLevel(node *tree, int k)
 {
-    if(tree ==　NULL || k < 1)
+    if(tree == NULL || k < 1)
         return 0;
     if(k == 1)
         return 1;
-    return GetKlevel(tree->left, k-1) + GetKlevel(tree->right, k-1);
+    return GetKLevel(tree->left, k-1) + GetKLevel(tree->right, k-1);
 }
 
 //求二叉树镜像，即交换左右子树
