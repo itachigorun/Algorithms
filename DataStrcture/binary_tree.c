@@ -16,13 +16,19 @@
 #include<malloc.h>
 #include<stdlib.h>
 
-struct binary_tree{
+#define MAXSIZE 100
+
+typedef struct binary_tree{
     int data;
     struct binary_tree *left;
     struct binary_tree *right;
-};
+}node;
 
-typedef struct binary_tree node;
+typedef struct seqstack{
+    node data[MAXSIZE];
+    int tag[MAXSIZE];  //为后续遍历准备的
+    int top;           //top为数组的下标
+}seqstack;
 
 void CreateTree(node **tree)
 {
@@ -89,7 +95,7 @@ void DeleteTree(node *tree)
 void PreOrderTree(node *tree)
 {
     if(tree){
-        printf("%d\n", tree->data);
+        printf("%d ", tree->data);
         PreOrderTree(tree->left);
         PreOrderTree(tree->right);
     }
@@ -100,7 +106,7 @@ void MidOrderTree(node *tree)
 {
     if(tree){
         MidOrderTree(tree->left);
-        printf("%d\n", tree->data);
+        printf("%d ", tree->data);
         MidOrderTree(tree->right);
     }
 }
@@ -111,7 +117,94 @@ void PostOrderTree(node *tree)
     if(tree){
         PostOrderTree(tree->left);
         PostOrderTree(tree->right);
-        printf("%d\n", tree->data);
+        printf("%d ", tree->data);
+    }
+}
+
+void NodePush(seqstack *stack, node *tree)
+{
+    if(stack->top == MAXSIZE)
+        printf("The stack is full\n");
+    else{
+        stack->top++;
+        stack->data[s->top] = tree;
+    }
+}
+
+node *NodePop(seqstack *stack)
+{
+    if(stack->top == -1)
+        return NULL;
+    else{
+        stack->top--;
+        return stack->data[stack->top+1];
+    }
+}
+
+//非递归前序遍历
+void PreOrderTree2(node *tree)
+{
+    seqstack stack;
+    stack.top = -1;    //表示栈为空
+    if(tree == NULL)
+        printf(" The tree is empty!\n");
+    
+    while(tree || stack.top!=-1){
+        while(tree){                  //只要节点不为空就入栈，与左右节点无关
+            printf("%d ", tree->data);
+            NodePush(&stack, tree);
+            tree = tree->left;
+        }
+        tree = NodePop(&stack);
+        tree = tree->right;
+    }
+}
+
+//非递归中序遍历
+void MidOrderTree2(node *tree)
+{
+    seqstack stack;
+    stack.top = -1;
+    if(tree == NULL)
+        printf("The tree is empty!\n");
+    
+    while(tree || stack.top!=-1){
+        while(tree){
+            NodePush(&stack, tree);
+            tree = tree->right;
+        }
+        tree = NodePop(&stack);
+        printf("%d ", tree->data);
+        tree = tree->right;
+    }
+}
+
+//非递归后续遍历,需要访问两次根节点
+void PostOrderTree2(node *tree)
+{
+    seqstack stack;
+    stack.top = -1;
+    if(tree == NULL)
+        printf("The tree is empty!\n");
+    
+    while(tree || stack.top!=-1){
+        while(tree){
+            NodePush(&stack, tree);
+            stack.tag[stack.top] = 0;    //设置访问根节点标记，0为第一次，1为第二次访问
+            tree = tree->left;
+        }
+        if(stack.tag[stack.top] == 0){  //第一次访问根节点时，专向同层右节点
+            tree = stack.data[s.top];  //左走到底时tree为空
+            stack.tag[stack.top] = 1;
+            tree = tree->right;
+        }
+        else{
+            while(stack.tag[stack.top] == 1){   //找到栈中下一个第一次访问的节点，退出循环时并没有pop，所有为其左子节点
+                tree = NodePop(&stack);
+                printf("%c ", tree->data);
+            }
+            tree = NUll;  //必须将tree置为空，跳过走左，直接向右走
+        }
     }
 }
 
@@ -251,12 +344,15 @@ int main()
             break;
         case 2:
             PreOrderTree(root);
+            PreOrderTree2(root);
             break;
         case 3:
             MidOrderTree(root);
+            MidOrderTree2(root);
             break;
         case 4:
             PostOrderTree(root);
+            PostOrderTree2(root);
             break;
         case 5:
             printf("二叉树的高度是:%d\n", GetHeightTree(root));
