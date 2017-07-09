@@ -54,7 +54,7 @@ void CreateTree(node **tree)
     return ;
 }
 
-//有问题待修改
+//插入节点
 void InsertTree(node ** tree, int value)
 {
     node * temp = NULL;
@@ -65,6 +65,8 @@ void InsertTree(node ** tree, int value)
         temp->right = NULL;
         temp->data = value;
         *tree = temp;
+        
+        return ; //退出函数，防止死循环
     }
     
     if(value <= (*tree)->data)
