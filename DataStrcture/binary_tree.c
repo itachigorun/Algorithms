@@ -32,8 +32,8 @@ typedef struct seqstack{
 
 typedef struct seqqueue{
     node *data[MAXSIZE];
-    int front;
-    int rear;
+    int front;   //队列的第一个元素位置
+    int rear;    //队列的最后一个元素的下一个位置
 }seqqueue;
 
 void CreateTree(node **tree)
@@ -219,10 +219,10 @@ void PostOrderTree2(node *tree)
 
 void EnterQueue(seqqueue *queue, node *tree)
 {
-    if(queue->rear == MAXSIZE)
+    if(queue->rear == MAXSIZE-1)
         printf("The queue is full\n");
     else{
-        queue->data[q-rear] = tree;
+        queue->data[queue->rear] = tree;
         queue->rear++;
     }
 }
