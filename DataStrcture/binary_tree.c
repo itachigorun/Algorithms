@@ -67,24 +67,6 @@ void InsertTree(node ** tree, int value)
         *tree = temp;
     }
     
-    if((*tree)->left == NULL && value <= (*tree)->data)
-    {
-        temp = (node *)malloc(sizeof(node));
-        temp->left = NULL;
-        temp->right = NULL;
-        temp->data = value;
-        *tree = temp;
-    }
-        
-    if((*tree)->right == NULL && value > (*tree)->data)
-    {
-        temp = (node *)malloc(sizeof(node));
-        temp->left = NULL;
-        temp->right = NULL;
-        temp->data = value;
-        *tree = temp;
-    }
-
     if(value <= (*tree)->data)
         InsertTree(&(*tree)->left, value);
     else 
@@ -131,6 +113,26 @@ void PostOrderTree(node *tree)
     }
 }
 
+// 判断一棵二叉树是否为平衡二叉树
+// 平衡二叉树的定义: 如果任意节点的左右子树的深度相差不超过1，那这棵树就是平衡二叉树
+// 算法思路：递归判断每个节点的左右子树的深度是否相差大于1，如果大于1，说明该二叉树不
+//           是平衡二叉树，否则继续递归判断
+int IsBalanceBinaryTree(node *tree)
+{
+	int leftDepth = 0;
+	int rightDepth = 0;
+	int distance = 0; 
+
+	if (tree != NULL)
+	{
+		leftDepth = GetHeightTree(tree->left);   // 获取左子树的深度
+		rightDepth = GetHeightTree(tree->right); // 获取右子树的深度
+		distance = leftDepth > rightDepth ? leftDepth - rightDepth : rightDepth - leftDepth;
+
+		return distance > 1 ? 0 : IsBalanceBinaryTree(tree->left) && IsBalanceBinaryTree(tree->right);
+	}
+}
+
 //计算二叉树的高度
 int GetHeightTree(node *tree)
 {
@@ -156,13 +158,15 @@ int GetNodeCount(node *tree)
     return count;
 }
 
-//计算叶子节点数
+//计算叶子节点数(度为0)
 int GetLeafCount1(node *tree)
 {
     int count = 0;
     if(tree == NULL)
         return 0;
-    else if(tree->left == NULL && tree->right == NULL)
+    
+    
+    if(tree->left == NULL && tree->right == NULL)
         return 1;
     else
         count = GetLeafCount1(tree->left) + GetLeafCount1(tree->right);
@@ -183,20 +187,37 @@ int GetLeafCount2(node *tree)
     return count;
 }
 
+// 获取度为1的结点的个数
+int GetCountOfOneDegree(node *tree)
+{
+	static int count; //static 变量自动赋值0
+
+	if (tree != NULL)
+	{
+		if ((tree->left != NULL && tree->right == NULL) || (tree->left == NULL && tree->right != NULL))
+		{
+			count++;
+		}
+
+		GetCountOfOneDegree(tree->left);
+        GetCountOfOneDegree(tree->right);
+	}
+
+	return count;
+}
+
+
 //计算满节点数--度为2的节点
 int GetFullNodeCount1(node *tree)
 {
     int count = 0;
     if(tree == NULL)
         return 0;
-    else if(tree->left == NULL && tree->right == NULL)
-        return 0;
-    else if(tree->left == NULL && tree->right != NULL)
-        count = GetFullNodeCount1(tree->right);
-    else if(tree->left != NULL && tree->right == NULL)
-        count = GetFullNodeCount1(tree->left);
+
+    if(tree->left!=NULL && tree->right!=NULL)
+        return 1;
     else 
-        count = 1 + GetFullNodeCount1(tree->left) + GetFullNodeCount1(tree->right);
+        count =GetFullNodeCount1(tree->left) + GetFullNodeCount1(tree->right);
     return count;
 }
 //对于二叉树而言，有一个公式：度为2的结点个数等于度为0的结点个数减去1。 即：n(2)=n(0)-1
