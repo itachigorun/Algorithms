@@ -373,6 +373,28 @@ int GetFullNodeCount2(node *tree)
     return GetLeafCount1(tree) > 0 ? GetLeafCount1(tree) - 1 : 0; 
 }
 
+//计算二叉树第K层的节点个数
+int GetKLevel(node *tree, int k)
+{
+    if(node ==　NULL || k < 1)
+        return 0;
+    if(k == 1)
+        return 1;
+    return GetKlevel(node->left, k-1) + GetKlevel(node->right, k-1);
+}
+
+//求二叉树镜像，即交换左右子树
+void GetMirrorTree(node *tree)
+{
+    if(node == NULL)
+        return ;
+    node *temp = tree->left;
+    tree->left = node->right;
+    tree->right = temp;
+    GetMirrorTree(tree->left);
+    GetMirrorTree(tree->right);
+}
+
 int main()
 {
     node * root = NULL;
@@ -384,7 +406,8 @@ int main()
     printf("二叉树创建成功\n");
 
     while(1){
-    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)层次遍历 6)得到树的高度 7)叶子节点数 8)节点数 9)满节点数 10)退出: ");
+    printf("请选择：1)插入一个节点 2)前序遍历 3)中序遍历 4)后续遍历 5)层次遍历 6)得到树的高度 7)叶子节点数 ");
+    printf("8)节点数 9)满节点数 10)第K层节点数 11)二叉树镜像 12)退出: ");
     scanf("%d", &select_number);
 
     switch(select_number){
@@ -430,6 +453,14 @@ int main()
             printf("二叉树的满节点数是:%d\n", GetFullNodeCount2(root));
             break;
         case 10:
+            printf("输入：")；
+            scanf("%d", &input_number);
+            printf("第%d层的节点数位：%d", input_number, GetKLevel(root, input_number));
+            break;
+        case 11:
+            GetMirrorTree(root);
+            break;
+        case 12:
             DeleteTree(root);
             exit(0);
         default:
