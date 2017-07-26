@@ -254,7 +254,7 @@ static void rbtree_left_rotate(RBRoot *root, Node *x)
     if (x->parent == NULL)
     {
         //tree = y;            // 如果 “x的父亲” 是空节点，则将y设为根节点
-        root->node = y;            // 如果 “x的父亲” 是空节点，则将y设为根节点
+        root->node = y;        // 如果 “x的父亲” 是空节点，则将y设为根节点
     }
     else
     {
