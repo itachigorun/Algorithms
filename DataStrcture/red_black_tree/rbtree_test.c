@@ -1,8 +1,8 @@
 /**
  * C语言实现的红黑树(Red Black Tree)
  *
- * @author skywang
- * @date 2013/11/18
+ * copy : http://www.cnblogs.com/skywang12345/p/3624177.html
+ * date : 2017-07-28
  */
 
 #include <stdio.h>
