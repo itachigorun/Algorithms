@@ -1,7 +1,7 @@
 cc = gcc
 program = rbtree 
 deps = rbtree.h
-objects = rbtree.o retree_test.o 
+objects = rbtree.o rbtree_test.o 
 
 $(program) : $(objects)
 	$(cc) -o $(program) $(objects)
