@@ -18,7 +18,6 @@
 */
 
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -78,7 +77,7 @@ int main(int argc, char *argv[])
 
 	printf("\n\t\t\t\tHuff Encode and Decode!");
 	printf("\n\n->Decode or Encode?(D or E)?");
-	ch = getch();
+	ch = getchar();
 	if (argc >= 2)
 	{
 		if (ch == 'D' || ch == 'd')
@@ -105,7 +104,7 @@ int main(int argc, char *argv[])
 			encoder(filename);
 		}
 	}
-	getch();
+	getchar();
 	return 0;
 }
 
@@ -123,7 +122,7 @@ int encoder(char *filename)
 	if(!(ht = (HF_Tree)malloc((count*2) * sizeof(HF))))
 	{
 		printf("\n->No Memory!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	runtime = clock(); //标记开始时间
@@ -142,7 +141,7 @@ int read_src(unsigned int *table, char *filename)
 	if(!(fp_src = fopen(filename, "rb")))
 	{
 		printf("\n->Error!File:\"%s\" Not Found!", filename);
-		getch();
+		getchar();
 		exit(1);
 	}
 	else
@@ -154,7 +153,7 @@ int read_src(unsigned int *table, char *filename)
 	if (len == 0)
 	{
 		printf("\n->Error!Empty File or File too big!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	printf("\n->Creating Table...");
@@ -191,7 +190,7 @@ void find_table(unsigned int *table, data_num_table *new_table, unsigned int *co
 	if (!new_table->data || !new_table->table_num)
 	{
 		printf("\n->Error!Create Table Failed!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	else
@@ -300,7 +299,7 @@ unsigned char **huff_code(HF_Tree ht,unsigned int count)
 		if (!code_table[i])
 		{
 			printf("\n->Error!No Memory!");
-			getch();
+			getchar();
 			exit(1);
 		}
 		strcpy(code_table[i], &buffer[start]);
@@ -326,13 +325,13 @@ int encode_file(const char *filename,  data_num_table new_table, const unsigned 
 	if (!(fp_dst = fopen(dst_file_name, "wb")))
 	{
 		printf("\n-->Create Encode File failed!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	if (!(fp_src = fopen(filename, "rb")))
 	{
 		printf("\n-->Open File failed!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	fseek(fp_src, 0, SEEK_END);
@@ -344,7 +343,7 @@ int encode_file(const char *filename,  data_num_table new_table, const unsigned 
 	if(!buffer_file || !buffer_hex)
 	{
 		printf("\n->Error!No Memory!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	else
@@ -433,7 +432,7 @@ int decoder(char *filename)
 	if(!(ht = (HF_Tree)malloc((format.count * 2) * sizeof(HF))))
 	{
 		printf("\n->Error!No Memory!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	runtime = clock(); //标记开始时间
@@ -452,7 +451,7 @@ int read_dst(data_num_table *table, char *filename)
 	if(!(fp_endcoded = fopen(filename, "rb")))
 	{
 		printf("\n->Error!File Not Found!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	else
@@ -462,7 +461,7 @@ int read_dst(data_num_table *table, char *filename)
 	if (strcmp(magic_head, "HFC") != 0)
 	{
 		printf("\n->Error!Unkonw Filetype!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	rewind(fp_endcoded);
@@ -473,20 +472,20 @@ int read_dst(data_num_table *table, char *filename)
 	if (!table->data || !table->table_num)
 	{
 		printf("\n->Error!Create Table Failed!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	fseek(fp_endcoded, format.table_start, SEEK_SET);
 	if(!fread((table->table_num+1), sizeof(unsigned int)*format.count, 1,fp_endcoded))
 	{
 		printf("\n->ERROR!File Exception!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	if (!fread((table->data+1), sizeof(unsigned char)*format.count, 1,fp_endcoded))
 		{
 			printf("\n->ERROR!File Exception!");
-			getch();
+			getchar();
 			exit(1);
 	}
 	printf("\n->Create Table Done!");
@@ -506,7 +505,7 @@ int decode_file(char *filename, HF_Tree ht)
 	if(!(fp_encode = fopen(filename, "rb")))
 	{
 		printf("\n->Error!File Not Found!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	len = strlen(filename) - 4;
@@ -515,7 +514,7 @@ int decode_file(char *filename, HF_Tree ht)
 	if(!(fp_decode = fopen(dst_filename, "wb")))
 	{
 		printf("\n->Create File Failed!");
-		getch();
+		getchar();
 		exit(1);
 	}
 // 	fseek(fp_encode, 0, SEEK_END);
@@ -567,7 +566,7 @@ int decode_file(char *filename, HF_Tree ht)
 				if(!fread(&tmp, 1, 1, fp_encode))
 				{
 					printf("\n->ERROR!File Exception!");
-					getch();
+					getchar();
 					exit(1);
 				}
 			}
@@ -604,7 +603,7 @@ int check_head()
 	if (!format.len || (format.table_start - sizeof(code_file)) || !format.code_len || !format.count || (format.code_start - sizeof(code_file) - format.count * (sizeof(unsigned char)+sizeof(unsigned int))))
 	{
 		printf("\n->ERROR!Check File Head Faided!");
-		getch();
+		getchar();
 		exit(1);
 	}
 	printf("\n->Check Head Done!");
@@ -635,7 +634,7 @@ int calc_size(unsigned int *k, FILE *fp, unsigned int max_buf, unsigned char *bu
 		if(!fread(buffer, max_buf, 1, fp))
 		{
 			printf("\n->ERROR!File Exception!");
-			getch();
+			getchar();
 			exit(1);
 		}
 		*k = ftell(fp);
