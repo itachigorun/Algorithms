@@ -36,7 +36,7 @@ typedef unsigned long int WeightType;
 typedef unsigned char MyType;
 typedef struct			//哈夫曼树
 {
-	MyType ch;		//存字符
+	MyType ch;			//存字符
 	WeightType weight;	/* 用来存放各个结点的权值 */
 	int parent, LChild, RChild;	/*指向双亲、孩子结点的指针 */
 } HTNode;
