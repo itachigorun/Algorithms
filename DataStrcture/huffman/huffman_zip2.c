@@ -543,7 +543,7 @@ void UnCompress()
 		//      printf("QLength= %d\n",Q->length);
 		ch = fgetc(cf);	//fread(&ch,sizeof(MyType),1,cf);
 		ToQueue(Q, ch);
-		thisFile++;	//   printf("char:%c",ch);
+		thisFile++;	    //printf("char:%c",ch);
 		//完了后队列长于码串的最大值       
 
 		while (Q->length > MaxLength) {
