@@ -1,0 +1,137 @@
+# itachigorun   2017-08-12
+
+
+问题描述：
+有N件物品和一个最大载重量为W的背包。第i件物品重量wi,价值vi,求背包中所能装下最大价值的物品。
+
+
+思路分析：
+问题可以看做往一个载重量为W的背包中装入有限数量的物品，求装入物品的最大价值。这里物品的件数都为1，所以每个物品都只有两种选择，要么放入背包，要么不放。
+在背包容量为j时，对前i件物品来说，设它的最大价值为dp[i][j]，它的最大价值状态转移公式为：
+//当第i件物品比背包容量还大时，dp[i][j]等于前i-1件物品放入这个背包的最大价值。
+dp[i][j]=dp[i-1][j]                                               (j<w[i])   
+//当第i件物品能放入背包时，分为两种情况，选择放和不放，不放的话和上面公式相同，放的话则背包容量减去第i件物品的重量再去装前i-1件物品，所得的最大价值加上第i件物品的价值。两种情况中较大的那种即为最优解。
+dp[i][j]=max(dp[i-1][j], dp[i-1][j-w[i]]+v[i])                    (j>=w[i])
+
+
+恰好装满与非恰好装满：
+如果是第一种问法，要求恰好装满背包，那么在初始化时除了dp[0]为0，其它F[1..W]均设为−∞，这样就可以保证最终得到的dp[W]是一种恰好装满背包的最优解。
+如果并没有要求必须把背包装满，而是只希望价格尽量大，初始化时应该将dp[0..W]全部设为0。
+这是为什么呢？可以这样理解：初始化的F数组事实上就是在没有任何物品可以放入背包时的合法状态。如果要求背包恰好装满，那么此时只有容量
+为0的背包可以在什么也不装且价值为0的情况下被“恰好装满”，其它容量的背包均没有合法的解，属于未定义的状态，应该被赋值为-∞了。如果背包并非
+必须被装满，那么任何容量的背包都有一个合法解“什么都不装”，这个解的价值为0，所以初始时状态的值也就全部为0了
+
+
+
+#include <iostream>  
+using namespace std;  
+  
+//物品数据结构  
+typedef struct commodity  
+{  
+    int value;  //价值  
+    int weight; //重量  
+}commodity;  
+  
+const int N = 3;  //物品个数  
+const int W = 50; //背包的容量  
+  
+//初始物品信息  
+commodity goods[N+1]={{0,0},{60,10},{100,20},{120,30}};  
+int select[N+1][W+1];  
+  
+int max_value();  
+  
+int main()  
+{  
+    int maxvalue = max_value();  
+    cout<<"The max value is: ";  
+    cout<<maxvalue<<endl;  
+    int remainspace = W;  
+    //输出所选择的物品列表：  
+    for(int i=N; i>=1; i--)  
+    {  
+        if (remainspace >= goods[i].weight)  
+        {  
+             if ((select[i][remainspace]-select[i-1][remainspace-goods[i].weight]==goods[i].value))  
+             {  
+                 cout << "item " << i << " is selected!" << endl;  
+                 remainspace = remainspace - goods[i].weight;//如果第i个物品被选择，那么背包剩余容量将减去第i个物品的重量 ;  
+             }  
+        }  
+    }  
+    return 0;  
+}  
+
+//代码结构未优化前
+int max_value()  
+{  
+    //初始没有物品时候，背包的价值为0  
+    for(int w=1;w<=W;++w)  
+        select[0][w] = 0;  
+    for(int i=1;i<=N;++i)  
+    {  
+        select[i][0] = 0;  //背包容量为0时，最大价值为0  
+           for(int w=1;w<=W;++w)  
+           {  
+               if(goods[i].weight <= w)  //当前物品i的重量小于等于w，进行选择  
+               {  
+                   if( (goods[i].value + select[i-1][w-goods[i].weight]) > select[i-1][w])  
+                    select[i][w] = goods[i].value + select[i-1][w-goods[i].weight];  
+                   else  
+                    select[i][w] = select[i-1][w];  
+               }  
+               else //当前物品i的重量大于w，不选择  
+                 select[i][w] = select[i-1][w];  
+           }  
+    }  
+    return select[N][W];  //最终求得最大值  
+}  
+
+
+
+
+//优化代码结构
+//获取两个数的大者  
+int getMax(int a,int b)  
+{  
+    return a>=b?a:b;  
+}  
+int Backpack()  
+{  
+    //初始化二维表中的第一行  
+    for(int k=0; k<=W; k++) select[0][k] = 0;  
+    //初始化二维表中的第一列  
+    for(int k=0; k<=N; k++) select[k][0] = 0;  
+  
+    //逐行进行填表  
+    for(int i=1; i<=N; i++) //物品编号从 1~N  
+    {  
+        for(int j=1; j<=W; j++) //背包容量从 1~W  
+        {  
+            select[i][j] = select[i-1][j];  
+            if(goods[i].weight <= j)  
+            {  
+                select[i][j] = getMax(select[i][j],select[i-1][j-goods[i].weight]+goods[i].value);  
+            }  
+        }  
+    }  
+    return select[N][W];  
+}  
+
+
+优化空间复杂度：O(NW)  -->  O(W)
+状态转移方程为：d(i, j)=max{ d(i-1, j), d(i-1, j-w)+V }，也就是在计算d(i, j)时我们用到了d(i-1,j)和d(i-1, j-w)的值。 
+如果我们只用一个一维数组d(0)～d(C)来保存状态值可以么？将i方向的维数去掉， 我们可以将原来二维数组表示为一维数据：d(i-1, j-w)变为d(j-w)， d(i-1, j)变为d(j).
+当我们要计算d(i, j)时，只需要比较d(j)和d(j-w)+v 的大小， 用较大的数更新d(j)即可。等等，如果我要计算d(i, j+1)，而它恰好要用到d(i-1, j)的值，
+那么问题就出来了，因为你刚刚才把它更新为d(i, j)了。那么，怎么办呢？ 按照j递减的顺序即可避免这种问题。
+比如，你计算完d(i, j)， 接下来要计算的是d(i,j-1)，而它的状态转移方程为d(i, j-1)=max{ d(i-1, j-1), d(i-1, j-1-w)+v }，它不会再用到d(i-1,j)的值！
+所以， 即使该位置的值被更新了也无所谓。
+void DP()  
+{  
+    for(int i=1;i<=N;i++)  
+        for(int j=W;j>0;j--)  
+    {  
+        dp[j]=w[i]<=j?max(dp[j-w[i]]+v[i],dp[j]):dp[j];  
+    }  
+} 
