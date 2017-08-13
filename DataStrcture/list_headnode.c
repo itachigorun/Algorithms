@@ -112,8 +112,8 @@ int main()
         switch(select_num)
         {
             case 1:
-	        InsertHeadList(L, input_num);
-	        break;
+	            InsertHeadList(L, input_num);
+	            break;
             case 2:
     	        DeleteOneList(L, input_num);
     	        break;

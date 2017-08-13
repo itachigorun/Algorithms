@@ -35,6 +35,19 @@ void InsertHeadList(Node **L, int input_num)
     p->prev = NULL;
 }
 
+/* 网上摘录链表无头结点链表节点插入 
+list* concat(list* l, list* r)
+{
+    list** indir = &l;
+    while(*indir) {
+        indir = &((*indir)->next);
+    }
+    *indir = r;
+    return l;
+}
+*/
+
+
 Node *ListSearch(Node *L, int input_num)
 {
     Node *p = L;
