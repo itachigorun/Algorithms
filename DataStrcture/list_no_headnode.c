@@ -35,7 +35,7 @@ void InsertHeadList(Node **L, int input_num)
     p->prev = NULL;
 }
 
-/* 网上摘录链表无头结点链表节点插入 
+/* 无头结点链表尾巴插入节点,用二级指针操作第一个节点插入，若是带头节点链表则插入不用二级指针
 list* concat(list* l, list* r)
 {
     list** indir = &l;
