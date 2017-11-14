@@ -93,7 +93,7 @@ void ClearList(Node *L)
 
 int main()
 {
-    Node *L = NULL;
+    Node *L = NULL; //L是头指针，指向头结点
     int select_num;
     int input_num;
     bool select_flag = true;
