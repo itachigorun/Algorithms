@@ -7,15 +7,15 @@ typedef struct btree_nodes {
 	struct btree_nodes *p[2*M];
 	int num;
 	bool is_leaf;
-	struct btree_nodes *prev;  // use one struct just for simple,Õâ2¸ö£¬¹©B+Tree used
-	struct btree_nodes *next;  // ¹©B+Tree used
+	struct btree_nodes *prev;  // use one struct just for simple,è¿™2ä¸ªï¼Œä¾›B+Tree used
+	struct btree_nodes *next;  // ä¾›B+Tree used
 	
 } btree_node;
 
 
 typedef struct StorageNode{
 	btree_node bnode;
-	int index[M];   // Ë÷Òı¼¯ºÏ:index_set 
+	int index[M];   // ç´¢å¼•é›†åˆ:index_set 
 }storage_node;
 
 typedef struct StorageStruct{

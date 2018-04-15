@@ -152,7 +152,7 @@ protected:
  	*/
   	virtual void Save(btree_node *root)=0;
   	
-  	int btree_node_num;  //¼ÇÂ¼¶àÉÙ¸öÊ÷½áµã£º how many  btree_node
+  	int btree_node_num;  //è®°å½•å¤šå°‘ä¸ªæ ‘ç»“ç‚¹ï¼š how many  btree_node
 public:
 
 	Tree(void)
@@ -171,7 +171,7 @@ public:
 	void insert(int target)
 	{
 		roots = btree_insert(roots, target);
-		Save(roots);  // ¼´Ê±±£´æ 
+		Save(roots);  // å³æ—¶ä¿å­˜ 
 	};
 
 	/**
@@ -189,7 +189,7 @@ public:
 	{
 		roots = btree_delete(roots, target);
 
-		Save(roots);  // ¼´Ê±±£´æ 
+		Save(roots);  // å³æ—¶ä¿å­˜ 
 	};
 	
 	void inorder_print()
