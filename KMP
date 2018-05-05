@@ -79,7 +79,3 @@ int KmpSearch(char* s, char* p)
     else  
         return -1;  
 }  
-
-引用：http://blog.csdn.net/v_july_v/article/details/7041827
-扩展1：BM算法
-扩展2：Sunday算法
