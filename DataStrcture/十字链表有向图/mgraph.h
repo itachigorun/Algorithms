@@ -28,13 +28,14 @@ class MGraph
 {
 private:
 	vector<VerNode<T>> vertex;
+	stack<T> result;
 public:
 	MGraph(vector<T> ver_in, multimap<int, int> arc_input);//十字链表表存储，建立具有n个顶点e条边的图
 	~MGraph();
 	bool DFSTraverse(int v);
 	bool BFSTraverse(int v);
 	bool TopologySort();
-	bool TopologySortbyDFS();
+	void TopologySortbyDFS();
 	int GetNodeNum();
 };
 template<typename T>
@@ -112,6 +113,15 @@ bool MGraph<T>::DFSTraverse(int v)
 		}
 		else
 		{
+			//拓扑排序
+			//由于加入顶点到集合中的时机是在dfs方法即将退出之时，
+			//而dfs方法本身是个递归方法，
+			//仅仅要当前顶点还存在边指向其他不论什么顶点，
+			//它就会递归调用dfs方法，而不会退出。
+			//因此，退出dfs方法，意味着当前顶点没有指向其他顶点的边了
+			//，即当前顶点是一条路径上的最后一个顶点。
+			//换句话说其实就是此时该顶点出度为0了
+			result.push(deq.back());
 			deq.pop_back();
 		}
 	}
@@ -220,6 +230,19 @@ bool MGraph<T>::TopologySort()
 	}
 	cout << "此图有环，无拓扑序列" << endl;
 	return false;//说明这个图有环
+}
+
+template<typename T>
+void MGraph<T>::TopologySortbyDFS()
+{
+	//输出拓扑序列，因为我们每次都是找到了出度为0的顶点加入栈中，
+	//所以输出时其实就要逆序输出，这样就是每次都是输出入度为0的顶点
+	while (result.size())
+	{
+		cout << result.top() << " ";
+		result.pop();
+	}
+	cout << endl;
 }
 
 template<typename T>
