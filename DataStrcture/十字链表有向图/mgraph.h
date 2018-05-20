@@ -6,6 +6,7 @@
 #include<algorithm>
 #include<map>
 #include<deque>
+#include<stack>
 using namespace std;
 
 struct ArcNode {
@@ -32,6 +33,8 @@ public:
 	~MGraph();
 	bool DFSTraverse(int v);
 	bool BFSTraverse(int v);
+	bool TopologySort();
+	bool TopologySortbyDFS();
 	int GetNodeNum();
 };
 template<typename T>
@@ -169,6 +172,54 @@ bool MGraph<T>::BFSTraverse(int v)
 	}
 	cout << endl;
 	return true;
+}
+
+template<typename T>
+bool MGraph<T>::TopologySort()
+{
+	vector<int> indegree(vertex.size());
+	stack<int> s;
+	for_each(vertex.begin(), vertex.end(), [&](auto temp)
+	{
+		ArcNode *p = temp.firstin;
+		while (p)
+		{
+			indegree[temp.data]++;
+			p = p->headlink;
+		}
+	});
+
+	//把入度为0的顶点入栈
+	for_each (indegree.begin(), indegree.end(), [&](auto temp)
+	{
+		if (!temp) {
+			s.push(temp);
+		}
+	});
+
+	//count用于计算输出的顶点个数
+	int count = 0;
+	ArcNode * temp;
+	int i = 0;
+	while (!s.empty()) {//如果栈为空，则结束循环
+		i = s.top();
+		s.pop();//保存栈顶元素，并且栈顶元素出栈
+		cout << this->vertex[i].data << " ";//输出拓扑序列
+		temp = this->vertex[i].firstout;
+		while (temp) {
+			if (!(--indegree[temp->tailvex])) {//如果入度减少到为0，则入栈
+				s.push(temp->tailvex);
+			}
+			temp = temp->taillink;
+		}
+		++count;
+	}
+	if (count == vertex.size()) {
+		cout << endl;
+		return true;
+	}
+	cout << "此图有环，无拓扑序列" << endl;
+	return false;//说明这个图有环
 }
 
 template<typename T>

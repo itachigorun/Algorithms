@@ -28,5 +28,7 @@ int main()
 
 	graph.BFSTraverse(0);
 	// 有向图广度遍历 0 1 4 2 5 7 3 6 8 9 10
+
+	graph.TopologySort();
 	return 0;
 }
