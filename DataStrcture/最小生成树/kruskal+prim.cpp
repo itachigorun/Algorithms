@@ -1,7 +1,5 @@
 #include <iostream>
-#include <iomanip>
 #include <queue>
-#include <iomanip>
 using namespace std;
 
 // 重定义边节点，便于操作
@@ -17,7 +15,6 @@ struct ArcNode {
 	int AdjName;
 	int Weight;
 	Position Next;
-
 };
 
 /* 边节点:（用于KrusKal算法）
@@ -75,8 +72,6 @@ public:
 	// 析构函数
 	~ALGraph();
 
-	//--------- 接口函数------------
-
 	// 基础函数
 	void Display();
 	void MakeEmpty();
@@ -85,8 +80,6 @@ public:
 	// 最小生成树函数
 	void KrusKal();
 	void Prim();
-
-	//-------------------------------
 
 private:
 	// 辅助函数
@@ -124,17 +117,16 @@ private:
 };
 
 
-
 /* 构造函数:初始化对象
 * 返回值:无
 * 参数:vnum:图中的顶点数
 */
-ALGraph::ALGraph(int vnum)
-	: VexNum(vnum), ArcNum(0) {
+ALGraph::ALGraph(int vnum): VexNum(vnum), ArcNum(0) 
+{
 	// 申请邻接表储存空间
-	AdjList = new VexNode[VexNum + 1];
+	AdjList = new VexNode[VexNum];
 	// 申请距离表储存空间
-	Table = new TableNode[VexNum + 1];
+	Table = new TableNode[VexNum];
 
 	// 判断是否申请成功
 	if (AdjList == NULL || Table == NULL) {
@@ -143,7 +135,7 @@ ALGraph::ALGraph(int vnum)
 	}
 
 	// 初始化邻接表以及距离表
-	for (int i = 0; i < VexNum + 1; i++) {
+	for (int i = 0; i < VexNum ; i++) {
 		AdjList[i].FirstArc = NULL;
 		AdjList[i].Name = i;
 		Table[i].Dist = INT_MAX;
@@ -179,7 +171,7 @@ void ALGraph::MakeEmpty() {
 	Position P;
 
 	// 遍历邻接表
-	for (int i = 1; i < VexNum + 1; i++) {
+	for (int i = 0; i < VexNum ; i++) {
 		P = AdjList[i].FirstArc;
 
 		// 遍历所有链接的边
@@ -198,10 +190,11 @@ void ALGraph::MakeEmpty() {
 * 返回值:无
 * 参数:无
 */
-void ALGraph::Creat() {
+void ALGraph::Creat()
+{
 	int tmp; // 储存边数
 	tmp = 10;
-	ArcNum += tmp;
+	ArcNum = tmp;
 
 	struct node {
 		int v;
@@ -209,16 +202,16 @@ void ALGraph::Creat() {
 		int weight;
 	};
 	node node[10] = {
-		{0,1,1},
-		{0,2,2},
-		{1,3,4},
-		{1,4,4},
-		{2,3,5},
-		{2,4,9},
-		{2,6,6},
-		{3,5,7},
-		{4,5,3},
-		{4,6,1},
+	{ 0,1,1 },
+	{ 0,2,2 },
+	{ 1,3,4 },
+	{ 1,4,4 },
+	{ 2,3,5 },
+	{ 2,4,9 },
+	{ 2,6,6 },
+	{ 3,5,7 },
+	{ 4,5,3 },
+	{ 4,6,1 },
 	};
 	// 创建所有的无向边
 	for (int i = 0; i < tmp; i++) {
@@ -260,7 +253,7 @@ void ALGraph::Creat() {
 */
 void ALGraph::InitTable() {
 	// 遍历所有的距离表
-	for (int i = 0; i < VexNum + 1; i++) {
+	for (int i = 0; i < VexNum ; i++) {
 		// 初始化参数
 		Table[i].Dist = INT_MAX;
 		Table[i].Known = false;
@@ -274,8 +267,9 @@ void ALGraph::InitTable() {
 */
 void ALGraph::Display() {
 	// 遍历所有的距离表
-	for (int i = 1; i < VexNum + 1; i++) {
-		cout << "jidian: " << i << " ,   juli: " << Table[i].Dist << " ,   lujing: " << Table[i].Path << endl;
+	cout << "Prim:" << endl;
+	for (int i = 0; i < VexNum ; i++) {
+		cout << Table[i].Path << "--" << i<<": " << Table[i].Dist << endl;
 	}
 }
 
@@ -334,18 +328,18 @@ void ALGraph::Prim() {
 	// w:一条无向边的另一个顶点
 	// counter:计数器，统计边数
 	// P:储存边节点
-	int v, w, counter;
+	int v, w;
 	Position P;
 
 	// 初始化距离表，并选取起始节点
 	InitTable();
-	v = 1;
-	counter = 1;
+	v = 0;
 	Table[v].Dist = 0;
 	Table[v].Known = true;
 
 	// 一直寻找，直到边数为:VexNum - 1
-	while (counter != VexNum) {
+	for(int counter=0;counter<VexNum;)
+	{
 		// 获取边节点
 		P = AdjList[v].FirstArc;
 
@@ -363,7 +357,7 @@ void ALGraph::Prim() {
 
 		// 寻找不构成圈的权重最小的无向边
 		int Min = INT_MAX;
-		for (int i = 1; i < VexNum + 1; i++) {
+		for (int i = 0; i < VexNum ; i++) {
 			if (Table[i].Known == false && Min > Table[i].Dist) {
 				v = i;
 				Min = Table[i].Dist;
@@ -385,8 +379,7 @@ Disjoint_Set::Disjoint_Set(int nums)
 	DisjSet = new int[NumSets + 1]; // 申请不相交集森林的存储空间
 
 	if (DisjSet == NULL)
-		//cout << "不相交集申请失败!" << endl;
-		cout << "buxiangguanjishenqingshibai!" << endl;
+		cout << "不相交集申请失败!" << endl;
 
 	// 初始化森林中的每棵树
 	else
@@ -403,15 +396,6 @@ Disjoint_Set::~Disjoint_Set()
 	delete DisjSet;
 	DisjSet = NULL;
 }
-
-/* （不是最好的方法）
-* 联合函数:将两个集合链接
-* 返回值:无
-* 参数:Root1:想要合并的一个集合；Root2:想要合并的另一个集合
-void Disjoint_Set::SetUnion(int Root1, int Root2) {
-DisjSet[Root2] = Root1;
-}
-*/
 
 /* 联合函数:将两个集合链接
 * 返回值 : 无
@@ -441,7 +425,7 @@ void  Disjoint_Set::SetUnion(int Root1, int Root2) {
 */
 int Disjoint_Set::Find(int X) {
 	// 判断是否是根部
-	if (DisjSet[X] <= 0)
+	if (DisjSet[X] < 0)
 		return X;
 
 	// 继续寻找根部
